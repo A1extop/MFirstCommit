@@ -9,5 +9,5 @@ func main() {
 }
 
 func Max[T comparable](one T, two T) bool {
-	return (one == two)
+	return (one != two)
 }
