@@ -1,0 +1,10 @@
+some text
+
+{{range .SomeSlice}}
+    {{if eq . "Груша" }}
+        !!!{{.}}!!!
+    {{else}}
+        {{.}}
+    {{end}}
+{{end}}
+more text
