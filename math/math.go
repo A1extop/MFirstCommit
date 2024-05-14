@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	var a int = 5
+	var a int = 15
 	var b int = 10
 	fmt.Println(Maximum(a, b))
 	fmt.Println(Minimum(a, b))
