@@ -1,26 +1,50 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
+
+type Printer interface {
+	Print(string)
+}
+
+type Scanner interface {
+	Scan() string
+}
+
+type MultiFunctionDevice interface {
+	Printer
+	Scanner
+}
+
+type SimplePrinter struct{}
+
+func (p *SimplePrinter) Print(doc string) {
+	fmt.Println("Printing:", doc)
+}
+
+type SimpleScanner struct{}
+
+func (s *SimpleScanner) Scan() string {
+	return "Scanning document"
+}
+
+type MultiFunctionDeviceImpl struct {
+	printer Printer
+	scanner Scanner
+}
+
+func (m *MultiFunctionDeviceImpl) Print(doc string) {
+	m.printer.Print(doc)
+}
+
+func (m *MultiFunctionDeviceImpl) Scan() string {
+	return m.scanner.Scan()
+}
 
 func main() {
-	var a int = 15
-	var b int = 10
-	fmt.Println(Maximum(a, b))
-	fmt.Println(Minimum(a, b))
-}
+	simplePrinter := &SimplePrinter{}
+	simpleScanner := &SimpleScanner{}
 
-func Maximum[T int | int32 | int64 | float32 | float64 | uint16 | uint32 | uint64](one, two T) T {
-	if one > two {
-		return one
-	}
-	return two
-}
-
-func Minimum[T int | int32 | int64 | float32 | float64 | uint16 | uint32 | uint64](one, two T) T {
-	if one < two {
-		return one
-	}
-	return two
+	multiFunctionDevice := &MultiFunctionDeviceImpl{printer: simplePrinter, scanner: simpleScanner}
+	multiFunctionDevice.Print("Hello, world!")
+	fmt.Println(multiFunctionDevice.Scan())
 }
